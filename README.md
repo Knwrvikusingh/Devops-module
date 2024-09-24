@@ -6,5 +6,8 @@ Git is a distributed version-control system for tracking changes in source code 
 Directories
 
 Git basics
+
 Git advanced
+
+
 Resource for practice (https://try.github.io/)
