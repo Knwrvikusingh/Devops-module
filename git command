@@ -1,0 +1,102 @@
+
+# Git Basic Commands
+
+### Getting & Creating Projects
+
+| Command | Description |
+| ------- | ----------- |
+| `git init` | Initialize a local Git repository |
+| `git clone ssh://git@github.com/[username]/[repository-name].git` | Create a local copy of a remote repository |
+
+### Basic Snapshotting
+
+| Command | Description |
+| ------- | ----------- |
+| `git status` | Check status |
+| `git add [file-name.txt]` | Add a file to the staging area |
+| `git add -A` | Add all new and changed files to the staging area |
+| `git commit -m "[commit message]"` | Commit changes |
+| `git rm -r [file-name.txt]` | Remove a file (or folder) |
+
+### Branching & Merging
+
+| Command | Description |
+| ------- | ----------- |
+| `git branch` | List branches (the asterisk denotes the current branch) |
+| `git branch -a` | List all branches (local and remote) |
+| `git branch [branch name]` | Create a new branch |
+| `git branch -d [branch name]` | Delete a branch |
+| `git push origin --delete [branch name]` | Delete a remote branch |
+| `git checkout -b [branch name]` | Create a new branch and switch to it |
+| `git checkout -b [branch name] origin/[branch name]` | Clone a remote branch and switch to it |
+| `git branch -m [old branch name] [new branch name]` | Rename a local branch |
+| `git checkout [branch name]` | Switch to a branch |
+| `git checkout -` | Switch to the branch last checked out |
+| `git checkout -- [file-name.txt]` | Discard changes to a file |
+| `git merge [branch name]` | Merge a branch into the active branch |
+| `git merge [source branch] [target branch]` | Merge a branch into a target branch |
+| `git stash` | Stash changes in a dirty working directory |
+| `git stash pop` | Apply the last stashed state on the working directory |
+| `git stash apply` | Like `git stash pop`, but do not remove last state from stash list. |
+| `git stash clear` | Remove all stashed entries |
+
+### Sharing & Updating Projects
+
+| Command | Description |
+| ------- | ----------- |
+| `git push origin [branch name]` | Push a branch to your remote repository |
+| `git push -u origin [branch name]` | Push changes to remote repository (and remember the branch) |
+| `git push` | Push changes to remote repository (remembered branch) |
+| `git push origin --delete [branch name]` | Delete a remote branch |
+| `git pull` | Update local repository to the newest commit |
+| `git pull origin [branch name]` | Pull changes from remote repository |
+| `git remote add origin ssh://git@github.com/[username]/[repository-name].git` | Add a remote repository |
+| `git remote set-url origin ssh://git@github.com/[username]/[repository-name].git` | Set a repository's origin branch to SSH |
+
+### Inspection & Comparison
+
+| Command | Description |
+| ------- | ----------- |
+| `git log` | View changes |
+| `git log --summary` | View changes (detailed) |
+| `git log --oneline` | View changes (briefly) |
+| `git diff [source branch] [target branch]` | Preview changes before merging |
+
+### Tagging
+
+| Command | Description |
+| ------- | ----------- |
+| `git tag` | List existing tags |
+| `git tag -a [tag name] -m [tag description]` | Creating an annotated tag |
+| `git push origin [tag name]` | Sharing tags to remote server |
+
+
+# Git Advanced Commands
+
+### Branching & Rebasing & squashing
+
+| Command | Description |
+| ------- | ----------- |
+| `git checkout [branch name] --orphan` | Creates a new branch without the long repository's history. |
+| `git rebase [source branch] [target branch]` | Fetch the current commits timeline from the remote branch and apply the new commits from the local branch on top of it |
+| `git rebase -i [commit hash]^` | Interactively rebase starting from the parent commit, where `[commit hash]^` specifies the parent commit |
+| `git pull origin [source branch] --rebase` | Pull changes from a remote repository using the `rebase` strategy. Default is `merge`. |
+| `git pull origin [source branch] --rebase --autostash` | The same as above but performing automatically stash and pop your uncommitted changes when the branch is in a dirty state. |
+| `git cherry-pick [commit hash]` | Apply the changes from any branche's commit to the target branch. |
+| `git config branch.[branch name].rebase true` | Set a specific branch to always use the `rebase` strategy. |
+
+### Fixing mistakes & destructive
+
+| Command | Description |
+| ------- | ----------- |
+| `git reset --hard origin/[target branch]` | Reset the local branch to the origin branch's state. **Caution:** your local changes will be lost. |
+| `git reset --soft HEAD~1` | Undo the last local commit. The `--soft` flag keeps the changes, if you don't need to keep them, you can use the `--hard` instead. **Caution**, the latter is a descructive command. |
+| `git commit --amend` | Modify the most recent commit. Can be used to edit message or add more files to that commit. **Caution**, this changes the commit hash, so do this only while it was not yet pushed to a shared branch. |
+| `git revert HEAD~1` | Create a new commit undoing the last commit's changes. |
+| `git reflog` | List all the git actions that were executed before. Useful to find a lost commit, then you can try to recover it. |
+| `git bisect start` | Useful to find the buggy commit (that possible introduces some bug). After this, you use `git bisect [good|bad]` indicating when the suggested commit is in a `good` or `bad` state. When the issue is found, use `git bisect reset` to reset back to the original state before using the git bisect command.|
+| ```git branch --merged \| egrep -v "(*\|master\|dev)" \| xargs git branch -d``` | Delete already merged branches but `master` and `dev` in this example.
+| `git clean -df` | Remove untracked files and directories from the working tree. Add `n` to the flags to list all files that would be removed. |
+
+
+
